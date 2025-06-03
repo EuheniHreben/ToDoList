@@ -36,6 +36,7 @@ function addListItem(text, done = false) {
   checkbox.type = "checkbox";
   checkbox.classList.add("checkbox-input");
   checkbox.checked = done;
+  
   checkbox.addEventListener("change", () => {
     newLi.classList.toggle("done", checkbox.checked);
     saveToStorage();
@@ -91,7 +92,6 @@ btn.addEventListener("click", (e) => {
     }
   }
   input.value = "";
-  input.focus();
 });
 
 input.addEventListener("keydown", (e) => {
