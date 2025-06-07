@@ -102,7 +102,8 @@ input.addEventListener("keydown", (e) => {
   }
 });
 
-clearChecksBtn.addEventListener("click", () => {
+clearChecksBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
   allCheckboxes.forEach((checkbox) => {
     checkbox.checked = false;
