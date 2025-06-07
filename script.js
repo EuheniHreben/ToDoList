@@ -96,7 +96,10 @@ btn.addEventListener("click", (e) => {
 });
 
 input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") btn.click();
+  if (e.key === "Enter") {
+    e.preventDefault();
+    btn.click();
+  }
 });
 
 clearChecksBtn.addEventListener("click", () => {
