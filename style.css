@@ -28,7 +28,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
 }
 
 .form input {
@@ -52,7 +52,7 @@ input {
   padding: 10px;
   border: none;
   background-color: #ffcc00;
-  border-radius: 5px;
+  border-radius: 10px;
   white-space: nowrap;
   position: relative;
   top: 0;
@@ -65,8 +65,8 @@ input {
 
 .btn--type-first {
   background: #ffcc00;
-  border: 2px solid #000;
-  box-shadow: 0px 4px #ffcc00;
+  /* border: 2px solid #000; */
+  box-shadow: 0px 4px #ab8901;
 }
 
 .btn--type-first:active {
