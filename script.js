@@ -25,6 +25,10 @@ window.addEventListener("DOMContentLoaded", () => {
   loadFromStorage();
 });
 
+function stringToUpperCase(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function addListItem(text, done = false) {
   const newLi = document.createElement("li");
   newLi.classList.add("list__item");
@@ -50,7 +54,7 @@ function addListItem(text, done = false) {
 
   const span = document.createElement("span");
   span.classList.add("task-text");
-  span.textContent = text;
+  span.textContent = stringToUpperCase(text);
 
   span.addEventListener("click", () => {
     checkbox.checked = !checkbox.checked;

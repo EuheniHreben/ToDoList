@@ -144,7 +144,6 @@ li.hide {
   text-overflow: ellipsis;
   max-width: 100%;
   margin: 0 auto;
-  display: -webkit-box;
   color: #fff;
   font-size: 22px;
   user-select: none;
