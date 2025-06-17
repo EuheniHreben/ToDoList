@@ -5,7 +5,13 @@ const list = document.getElementById("taskList");
 const clearChecksBtn = document.getElementById("clearChecksBtn");
 
 function saveToStorage() {
-  const items = [...list.querySelectorAll("li")].map((li) => {
+  const items = [...list.querySelectorAll("li")];
+  items.sort((a, b) => {
+    const textA = a.querySelector(".task-text").textContent.toLowerCase();
+    const textB = b.querySelector(".task-text").textContent.toLowerCase();
+    return textA.localeCompare(textB);
+  });
+  const result = items.map((li) => {
     const span = li.querySelector(".task-text");
     const checkbox = li.querySelector("input[type='checkbox']");
     return {
@@ -13,17 +19,13 @@ function saveToStorage() {
       done: checkbox.checked,
     };
   });
-  localStorage.setItem("myList", JSON.stringify(items));
+  localStorage.setItem("myList", JSON.stringify(result));
 }
 
 function loadFromStorage() {
   const savedList = JSON.parse(localStorage.getItem("myList")) || [];
   savedList.forEach((item) => addListItem(item.text, item.done));
 }
-
-window.addEventListener("DOMContentLoaded", () => {
-  loadFromStorage();
-});
 
 function stringToUpperCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -43,6 +45,8 @@ function addListItem(text, done = false) {
 
   checkbox.addEventListener("change", () => {
     newLi.classList.toggle("done", checkbox.checked);
+    list.removeChild(newLi);
+    insertSortedItem(newLi, checkbox.checked);
     saveToStorage();
   });
 
@@ -59,6 +63,8 @@ function addListItem(text, done = false) {
   span.addEventListener("click", () => {
     checkbox.checked = !checkbox.checked;
     newLi.classList.toggle("done", checkbox.checked);
+    list.removeChild(newLi);
+    insertSortedItem(newLi, checkbox.checked);
     saveToStorage();
   });
 
@@ -75,8 +81,41 @@ function addListItem(text, done = false) {
 
   newLi.classList.toggle("done", done);
   newLi.append(label, span, delBtn);
-  list.append(newLi);
+
+  insertSortedItem(newLi, done);
 }
+
+function insertSortedItem(li, done) {
+  const items = [...list.children];
+  const newText = li.querySelector(".task-text").textContent.toLowerCase();
+  let inserted = false;
+
+  for (let item of items) {
+    const itemText = item.querySelector(".task-text").textContent.toLowerCase();
+    const itemDone = item.classList.contains("done");
+
+    if (!done && itemDone) {
+      list.insertBefore(li, item);
+      inserted = true;
+      break;
+    }
+
+    if (done === itemDone) {
+      if (newText < itemText) {
+        list.insertBefore(li, item);
+        inserted = true;
+        break;
+      }
+    }
+  }
+  if (!inserted) {
+    list.append(li);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadFromStorage();
+});
 
 btn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -85,7 +124,7 @@ btn.addEventListener("click", (e) => {
     const allLi = list.querySelectorAll("li .task-text");
     let isDuplicate = false;
     for (let span of allLi) {
-      if (span.textContent === value) {
+      if (span.textContent.toLowerCase() === value.toLowerCase()) {
         isDuplicate = true;
         break;
       }
