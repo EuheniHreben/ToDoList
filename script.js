@@ -113,6 +113,22 @@ function insertSortedItem(li, done) {
   }
 }
 
+function resortList() {
+  const items = [...list.children];
+  list.innerHTML = "";
+  items.sort((a, b) => {
+    const aDone = a.classList.contains("done");
+    const bDone = b.classList.contains("done");
+    if (aDone !== bDone) {
+      return aDone ? 1 : -1;
+    }
+    const aText = a.querySelector(".task-text").textContent.toLowerCase();
+    const bText = b.querySelector(".task-text").textContent.toLowerCase();
+    return aText.localeCompare(bText);
+  });
+  items.forEach((item) => list.appendChild(item));
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   loadFromStorage();
 });
@@ -152,5 +168,6 @@ clearChecksBtn.addEventListener("click", (e) => {
     checkbox.checked = false;
     checkbox.closest("li").classList.remove("done");
   });
+  resortList();
   saveToStorage();
 });
