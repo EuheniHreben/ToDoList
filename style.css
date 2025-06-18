@@ -92,8 +92,8 @@ li {
   list-style: none;
   color: #ffcc00;
   margin: 10px 0;
-  animation: 0.5s show ease;
-  transition: all 0.5s;
+  animation: 0.4s show ease;
+  transition: all 0.4s;
 }
 
 li.hide {

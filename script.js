@@ -1,4 +1,3 @@
-console.clear();
 const input = document.getElementById("taskInput");
 const btn = document.getElementById("addBtn");
 const list = document.getElementById("taskList");
@@ -31,6 +30,18 @@ function stringToUpperCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function toggleDone(li, checkbox) {
+  li.classList.toggle("done", checkbox.checked);
+  li.classList.add("hide");
+
+  setTimeout(() => {
+    li.classList.remove("hide");
+    list.removeChild(li);
+    insertSortedItem(li, checkbox.checked);
+    saveToStorage();
+  }, 400);
+}
+
 function addListItem(text, done = false) {
   const newLi = document.createElement("li");
   newLi.classList.add("list__item");
@@ -44,10 +55,7 @@ function addListItem(text, done = false) {
   checkbox.checked = done;
 
   checkbox.addEventListener("change", () => {
-    newLi.classList.toggle("done", checkbox.checked);
-    list.removeChild(newLi);
-    insertSortedItem(newLi, checkbox.checked);
-    saveToStorage();
+    toggleDone(newLi, checkbox);
   });
 
   const mark = document.createElement("span");
@@ -62,10 +70,7 @@ function addListItem(text, done = false) {
 
   span.addEventListener("click", () => {
     checkbox.checked = !checkbox.checked;
-    newLi.classList.toggle("done", checkbox.checked);
-    list.removeChild(newLi);
-    insertSortedItem(newLi, checkbox.checked);
-    saveToStorage();
+    toggleDone(newLi, checkbox);
   });
 
   const delBtn = document.createElement("button");
