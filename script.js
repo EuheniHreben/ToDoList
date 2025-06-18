@@ -39,7 +39,7 @@ function toggleDone(li, checkbox) {
     list.removeChild(li);
     insertSortedItem(li, checkbox.checked);
     saveToStorage();
-  }, 400);
+  }, 300);
 }
 
 function addListItem(text, done = false) {
@@ -77,7 +77,7 @@ function addListItem(text, done = false) {
   delBtn.textContent = "❌";
   delBtn.classList.add("btn", "btn--remove");
   delBtn.addEventListener("click", () => {
-    newLi.classList.add("hide");
+    newLi.classList.add("remove");
     setTimeout(() => {
       newLi.remove();
       saveToStorage();

@@ -93,12 +93,17 @@ li {
   color: #ffcc00;
   margin: 10px 0;
   animation: 0.4s show ease;
-  transition: all 0.4s;
+  transition: all 0.3s ease-out;
 }
 
 li.hide {
   opacity: 0;
   transform: translateX(30px);
+}
+
+li.remove {
+  opacity: 0;
+  transform: scale(0.5);
 }
 
 .checkbox-input {
