@@ -92,7 +92,6 @@ li {
   list-style: none;
   color: #ffcc00;
   border-bottom: 1px solid #222;
-  margin: 10px 0;
   animation: 0.4s show ease;
   transition: all 0.3s ease-out;
 }
@@ -104,7 +103,7 @@ li.hide {
 
 li.remove {
   opacity: 0;
-  transform: scale(0.5);
+  transform: scale(0.7);
 }
 
 .checkbox-input {
@@ -149,7 +148,7 @@ li.remove {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 10px auto;
   color: #fff;
   font-size: 22px;
   user-select: none;
