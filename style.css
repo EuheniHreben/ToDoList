@@ -91,6 +91,7 @@ li {
   cursor: pointer;
   list-style: none;
   color: #ffcc00;
+  border-bottom: 1px solid #222;
   margin: 10px 0;
   animation: 0.4s show ease;
   transition: all 0.3s ease-out;
