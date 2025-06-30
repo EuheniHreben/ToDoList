@@ -23,7 +23,18 @@ function saveToStorage() {
 
 function loadFromStorage() {
   const savedList = JSON.parse(localStorage.getItem("myList")) || [];
-  savedList.forEach((item) => addListItem(item.text, item.done));
+  if (savedList.length === 0) {
+    const defaultItems = [
+      { text: "1. Проснуться", done: false },
+      { text: "2. Позавракать", done: false },
+      { text: "3. Пойти на работу", done: false },
+      { text: "4. Дожить до вечера", done: false },
+    ];
+    defaultItems.forEach((item) => addListItem(item.text, item.done));
+    saveToStorage();
+  } else {
+    savedList.forEach((item) => addListItem(item.text, item.done));
+  }
 }
 
 function stringToUpperCase(str) {
