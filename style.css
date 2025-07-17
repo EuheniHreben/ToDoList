@@ -18,10 +18,10 @@ body {
   width: 90%;
   max-width: 400px;
   min-width: 250px;
-  padding: 20px;
+  padding: 20px 20px 10px 20px;
   background-color: #333;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .8);
 }
 
 .form {
@@ -56,7 +56,7 @@ input {
   white-space: nowrap;
   position: relative;
   top: 0;
-  transition: all 0.1s ease-in;
+  transition: all 0.3s ease-in;
 }
 
 .btn:active {
@@ -65,7 +65,6 @@ input {
 
 .btn--type-first {
   background: #ffcc00;
-  /* border: 2px solid #000; */
   box-shadow: 0px 4px #ab8901;
 }
 
@@ -92,8 +91,16 @@ li {
   list-style: none;
   color: #ffcc00;
   border-bottom: 1px solid #222;
-  animation: 0.4s show ease;
   transition: all 0.3s ease-out;
+  padding: 0 10px;
+  animation: 0.3s show ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  li:hover {
+    transform: scale(1.05);
+    box-shadow: 2px 2px 10px black;
+  }
 }
 
 li.hide {
@@ -130,7 +137,7 @@ li.remove {
   font-size: 16px;
   line-height: 1;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
