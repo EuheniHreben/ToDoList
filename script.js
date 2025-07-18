@@ -50,7 +50,7 @@ function toggleDone(li, checkbox) {
     list.removeChild(li);
     insertSortedItem(li, checkbox.checked);
     saveToStorage();
-  }, 300);
+  }, 200);
 }
 
 function addListItem(text, done = false) {
@@ -92,7 +92,7 @@ function addListItem(text, done = false) {
     setTimeout(() => {
       newLi.remove();
       saveToStorage();
-    }, 300);
+    }, 200);
   });
 
   newLi.classList.toggle("done", done);

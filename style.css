@@ -56,7 +56,7 @@ input {
   white-space: nowrap;
   position: relative;
   top: 0;
-  transition: all 0.3s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .btn:active {
@@ -91,9 +91,9 @@ li {
   list-style: none;
   color: #ffcc00;
   border-bottom: 1px solid #222;
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease-out;
   padding: 0 10px;
-  animation: 0.3s show ease;
+  animation: 0.2s show ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -137,7 +137,7 @@ li.remove {
   font-size: 16px;
   line-height: 1;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
   pointer-events: none;
 }
 
