@@ -164,7 +164,7 @@ li.remove {
 .done .task-text {
   text-decoration: line-through;
   opacity: 0.6;
-  color: #888888;
+  color: green;
 }
 
 @keyframes show {
