@@ -48,7 +48,7 @@ input {
 .btn {
   cursor: pointer;
   color: #333;
-  margin: 5px 0;
+  margin: 5px 0 10px;
   padding: 10px;
   border: none;
   background-color: #ffcc00;
@@ -164,7 +164,7 @@ li.remove {
 .done .task-text {
   text-decoration: line-through;
   opacity: 0.6;
-  color: green;
+  color: gray;
 }
 
 @keyframes show {
