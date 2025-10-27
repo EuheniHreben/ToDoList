@@ -21,6 +21,7 @@ body {
   padding: 20px 20px 10px 20px;
   background-color: #333;
   border-radius: 12px;
+  border: 2px solid #ffcc00;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, .8);
 }
 
@@ -64,6 +65,7 @@ input {
 }
 
 .btn--type-first {
+  padding: 10px 30px;
   background: #ffcc00;
   box-shadow: 0px 4px #ab8901;
 }
