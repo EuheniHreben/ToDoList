@@ -44,6 +44,9 @@ input {
   width: 50%;
   background-color: #444;
   color: #fff;
+  box-shadow: 0px 4px #222; /* тень вниз, как у кнопки */
+  transition: all 0.2s ease-in;
+  position: relative;
 }
 
 .btn {
