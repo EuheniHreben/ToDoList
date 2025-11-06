@@ -8,6 +8,7 @@ body {
   justify-content: center;
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 20s ease, color 20s ease;
 }
 
 * {
@@ -24,6 +25,31 @@ body {
   border-radius: 12px;
   border: 2px solid #ffcc00;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+body.dark .todo {
+  border: 2px solid #007acc;
+}
+
+body.dark input {
+  border: 2px solid #007acc;
+}
+
+body.dark .custom-checkbox {
+  border: 2px solid #007acc;
+}
+
+body.dark .btn--type-first {
+  background-color: #007acc;
+  box-shadow: 0px 4px #015c99;
+}
+
+body.dark .btn--type-first:active {
+  background-color: #007acc;
+}
+
+body.dark li {
+  color: #007acc;
 }
 
 .form {
@@ -100,6 +126,7 @@ li {
   transition: all 0.2s ease-out;
   padding: 0 10px;
   animation: 0.2s show ease;
+  background-color: #333;
 }
 
 li:last-child {

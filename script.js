@@ -37,6 +37,18 @@ function loadFromStorage() {
   }
 }
 
+function setThemeByTime() {
+  const hour = new Date().getHours();
+  const minutes = new Date().getMinutes();
+  const hours = new Date().getHours();
+  const totalMinutes = hours * 60 + minutes;
+  const body = document.body;
+  body.className = "";
+  console.log(totalMinutes);
+  if (hour >= 6 && hour <= 18) body.classList.remove("dark");
+  else body.classList.add("dark");
+}
+
 function stringToUpperCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -148,6 +160,9 @@ function resortList() {
 window.addEventListener("DOMContentLoaded", () => {
   loadFromStorage();
 });
+
+setThemeByTime();
+setInterval(setThemeByTime, 60 * 1000);
 
 btn.addEventListener("click", (e) => {
   e.preventDefault();
