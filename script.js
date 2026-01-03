@@ -3,6 +3,10 @@
 
   const STORAGE_KEY = "myList";
 
+  // Sync these with CSS animation/transition durations
+  const MOVE_MS = 320; // task "fly" between lists (done/undone)
+  const REMOVE_MS = 240; // delete animation
+
   const input = document.getElementById("taskInput");
   const addBtn = document.getElementById("addBtn");
   const list = document.getElementById("taskList");
@@ -145,7 +149,7 @@
       insertSortedItem(li, checkbox.checked);
       saveToStorage();
       updateEmptyState();
-    }, 200);
+    }, MOVE_MS);
   }
 
   function addListItem(text, done = false) {
@@ -175,9 +179,19 @@
     delBtn.textContent = "❌";
     delBtn.classList.add("btn", "btn--remove");
 
+    // Toggle by checkbox itself
     checkbox.addEventListener("change", () => toggleDone(newLi, checkbox));
 
-    span.addEventListener("click", () => {
+    // Toggle by clicking anywhere on the row (except checkbox area and delete)
+    newLi.addEventListener("click", (e) => {
+      if (e.target.closest(".btn--remove")) return;
+      if (
+        e.target.closest(".custom-checkbox") ||
+        e.target.matches("input[type='checkbox']")
+      ) {
+        return;
+      }
+
       checkbox.checked = !checkbox.checked;
       toggleDone(newLi, checkbox);
     });
@@ -189,7 +203,7 @@
         newLi.remove();
         saveToStorage();
         updateEmptyState();
-      }, 200);
+      }, REMOVE_MS);
     });
 
     newLi.classList.toggle("done", done);
