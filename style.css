@@ -222,7 +222,7 @@ li:last-child {
 /* Animated states */
 li.hide {
   opacity: 0;
-  transform: translateX(120px) scale(0.95);
+  transform: translateX(200px) scale(0.95);
 }
 
 li.remove {
@@ -403,7 +403,7 @@ li.remove {
 @keyframes show {
   from {
     opacity: 0;
-    transform: translateX(120px);
+    transform: translateX(200px);
   }
   to {
     opacity: 1;
