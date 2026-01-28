@@ -1,62 +1,119 @@
-body {
-  background: #222;
-  color: #fff;
-  padding: 20px 0;
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-  transition: background-color 20s ease, color 20s ease;
+/* =========================
+   Base / Reset
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 * {
-  box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
+:root {
+  /* Fonts */
+  --font: Arial, Helvetica, sans-serif;
+
+  /* Layout */
+  --container-max: 400px;
+  --radius: 12px;
+
+  /* Animation */
+  --t-fast: 0.2s ease-in;
+  --t-out: 0.2s ease-out;
+
+  /* Theme (default: DARK) */
+  --bg: #222;
+  --text: #fff;
+
+  --card-bg: #444;
+  --input-bg: #333;
+
+  --accent: #ffcc00;
+  --accent-shadow: #ab8901;
+
+  --border: #222;
+  --li-text: #ffcc00;
+
+  --btn-text: #333;
+
+  --shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+
+  /* Settings */
+  --settings-btn-bg: rgba(0, 0, 0, 0.35);
+  --settings-panel-bg: rgba(40, 40, 40, 0.96);
+  --settings-btn-bg: rgba(0, 0, 0, 1);
+}
+
+/* LIGHT theme (if you need it later) */
+body.light {
+  --bg: #f2f2f2;
+  --text: #222;
+
+  --card-bg: #fff;
+  --input-bg: #fff;
+
+  --border: #e5e5e5;
+  --li-text: #222;
+
+  --btn-text: #222;
+
+  --settings-btn-bg: rgba(255, 255, 255, 0.75);
+  --settings-panel-bg: rgba(255, 255, 255, 0.96);
+}
+
+/* DARK theme override (blue accent) */
+body.dark {
+  --accent: #007acc;
+  --accent-shadow: #015c99;
+  --li-text: #66c2ff;
+  --card-bg: #333;
+}
+
+/* =========================
+   Page
+========================= */
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: var(--font);
+
+  background: var(--bg);
+  color: var(--text);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================
+   Todo Card
+========================= */
 .todo {
-  width: 90%;
-  max-width: 400px;
-  min-width: 250px;
+  width: min(90%, var(--container-max));
   min-height: 160px;
   padding: 20px;
-  background-color: #333;
-  border-radius: 12px;
-  border: 2px solid #ffcc00;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  border: 2px solid var(--accent);
+  box-shadow: var(--shadow);
 }
 
-body.dark .todo {
-  border: 2px solid #007acc;
-}
-
-body.dark input {
-  border: 2px solid #007acc;
-}
-
-body.dark .custom-checkbox {
-  border: 2px solid #007acc;
-}
-
-body.dark .btn--type-first {
-  background-color: #007acc;
-  box-shadow: 0px 4px #015c99;
-}
-
-body.dark .btn--type-first:active {
-  background-color: #007acc;
-}
-
-body.dark li {
-  color: #66c2ff;
-}
-
+/* =========================
+   Form
+========================= */
 .form {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -66,28 +123,37 @@ body.dark li {
 }
 
 input {
-  padding: 10px;
-  border: 2px solid #ffcc00;
-  border-radius: 8px;
   width: 50%;
-  background-color: #444;
-  color: #fff;
-  position: relative;
-  transition: all 0.2s ease-in;
+  padding: 10px;
+
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+
+  background-color: var(--input-bg);
+  color: var(--text);
+
+  transition: var(--t-fast);
 }
 
+/* =========================
+   Buttons
+========================= */
 .btn {
   cursor: pointer;
-  color: #333;
   margin: 5px 0 10px;
   padding: 10px;
+
   border: none;
-  background-color: #ffcc00;
   border-radius: 8px;
+
+  background-color: var(--accent);
+  color: var(--btn-text);
+
   white-space: nowrap;
   position: relative;
   top: 0;
-  transition: all 0.2s ease-in;
+
+  transition: var(--t-fast);
 }
 
 .btn:active {
@@ -96,44 +162,54 @@ input {
 
 .btn--type-first {
   padding: 10px 30px;
-  background: #ffcc00;
-  box-shadow: 0px 4px #ab8901;
+  box-shadow: 0px 4px var(--accent-shadow);
 }
 
 .btn--type-first:active {
-  box-shadow: 0px 1px #ffcc00;
+  box-shadow: 0px 1px var(--accent);
 }
 
 .btn--remove {
   background-color: transparent;
+  box-shadow: none;
+  padding: 10px;
 }
 
+/* =========================
+   List
+========================= */
 ul {
-  text-align: center;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  text-align: center;
 }
 
 li {
+  list-style: none;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+
   gap: 10px;
-  cursor: pointer;
-  list-style: none;
-  color: #ffcc00;
-  border-bottom: 1px solid #222;
   padding: 0 10px 0 16px;
+
+  font-size: 20px;
+  cursor: pointer;
+
+  color: var(--li-text);
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+
   animation: 0.2s show ease;
-  background-color: #333;
-  transition: all 0.2s ease-out;
+  transition: var(--t-out);
 }
 
 li:last-child {
   border-bottom: none;
 }
 
+/* Hover only for mouse devices */
 @media (hover: hover) and (pointer: fine) {
   li:hover {
     border-radius: 10px;
@@ -143,6 +219,7 @@ li:last-child {
   }
 }
 
+/* Animated states */
 li.hide {
   opacity: 0;
   transform: translateX(120px) scale(0.95);
@@ -153,6 +230,9 @@ li.remove {
   transform: scale(0.6);
 }
 
+/* =========================
+   Checkbox
+========================= */
 .checkbox-input {
   position: absolute;
   opacity: 0;
@@ -165,10 +245,13 @@ li.remove {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   width: 20px;
   height: 20px;
-  border: 2px solid #ffcc00;
+
+  border: 2px solid var(--accent);
   border-radius: 2px;
+
   cursor: pointer;
   position: relative;
 }
@@ -176,8 +259,12 @@ li.remove {
 .checkbox-mark {
   font-size: 16px;
   line-height: 1;
+
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transform: scale(1);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
   pointer-events: none;
 }
 
@@ -186,14 +273,19 @@ li.remove {
   transform: scale(1.2);
 }
 
+/* =========================
+   Task text
+========================= */
 .task-text {
+  max-width: 100%;
+  margin: 14px auto;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
-  margin: 14px auto;
-  color: #fff;
-  font-size: 22px;
+
+  color: var(--text);
+  font-size: clamp(16px, 4.5vw, 22px);
   user-select: none;
 }
 
@@ -203,6 +295,9 @@ li.remove {
   color: gray;
 }
 
+/* =========================
+   Empty state / helpers
+========================= */
 .empty-state {
   margin-top: 20px;
   text-align: center;
@@ -215,6 +310,96 @@ li.remove {
   display: none;
 }
 
+/* =========================
+   Settings (top-right)
+========================= */
+.settings {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 20;
+}
+
+.settings__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+
+  border: 2px solid color-mix(in srgb, var(--accent) 80%, transparent);
+  background: var(--settings-btn-bg);
+  color: var(--text);
+
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0px 4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.settings__panel {
+  margin-top: 10px;
+  width: 280px;
+  padding: 12px 20px;
+
+  border-radius: 12px;
+  border: 2px solid color-mix(in srgb, var(--accent) 80%, transparent);
+  background: var(--settings-panel-bg);
+
+  box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.7);
+}
+
+.settings__btn i {
+  transition: transform 0.2s ease;
+}
+
+.settings.open .settings__btn i {
+  transform: rotate(90deg) scale(1.05);
+}
+
+.settings__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.settings__label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.settings__select {
+  width: 140px;
+  padding: 8px;
+  cursor: pointer;
+
+  border-radius: 10px;
+  border: 2px solid color-mix(in srgb, var(--accent) 80%, transparent);
+
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 15; /* ниже панели (20), но выше todo */
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.backdrop.show {
+  opacity: 1;
+}
+
+/* =========================
+   Keyframes
+========================= */
 @keyframes show {
   from {
     opacity: 0;
@@ -226,13 +411,28 @@ li.remove {
   }
 }
 
-@keyframes hide {
-  from {
-    opacity: 1;
-    transform: translateX(0);
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 360px) {
+  .todo {
+    padding: 10px;
   }
-  to {
-    opacity: 0;
-    transform: translateX(120px);
+
+  .todo h1 {
+    font-size: 20px;
+  }
+
+  li {
+    padding: 0 2px;
+  }
+
+  .btn--type-first {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .task-text {
+    font-size: 18px;
   }
 }

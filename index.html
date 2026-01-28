@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
@@ -11,6 +11,43 @@
     <title>ToDo</title>
   </head>
   <body>
+    <div class="settings" aria-label="Настройки">
+      <button
+        id="settingsBtn"
+        class="settings__btn"
+        type="button"
+        aria-label="Открыть настройки"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-gear" aria-hidden="true"></i>
+      </button>
+
+      <div
+        id="settingsPanel"
+        class="settings__panel hidden"
+        role="dialog"
+        aria-label="Настройки приложения"
+      >
+        <div class="settings__row">
+          <label for="themeSelect" class="settings__label">Тема</label>
+          <select id="themeSelect" class="settings__select">
+            <option value="auto">Авто</option>
+            <option value="dark">Тёмная</option>
+            <option value="light">Светлая</option>
+          </select>
+        </div>
+
+        <div class="settings__row">
+          <label for="sortSelect" class="settings__label">Сортировка</label>
+          <select id="sortSelect" class="settings__select">
+            <option value="added">По порядку добавления</option>
+            <option value="alpha">По алфавиту</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="backdrop" class="backdrop hidden" aria-hidden="true"></div>
     <div class="todo">
       <form class="form">
         <button
@@ -39,6 +76,7 @@
         Пока пусто... Добавь первую задачу ➕
       </p>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
