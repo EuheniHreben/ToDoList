@@ -360,6 +360,7 @@
       prefs = { ...prefs, theme: themeSelect.value };
       writePrefs(prefs);
       applyTheme(prefs.theme);
+      setPanelOpen(false);
     });
   }
 
@@ -369,6 +370,7 @@
       writePrefs(prefs);
       resortList();
       saveToStorage();
+      setPanelOpen(false);
     });
   }
 
