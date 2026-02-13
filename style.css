@@ -320,8 +320,8 @@ li.remove {
 }
 
 .settings__btn {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 999px;
   font-size: 20px;
 
@@ -346,13 +346,13 @@ li.remove {
 }
 
 .settings.open .settings__btn i {
-  transform: rotate(180deg);
+  transform: rotate(90deg) scale(1.6);
 }
 
 .settings__panel {
   position: absolute;
   top: 54px;
-    right: 0;
+  right: 0;
   margin-top: 0;
   margin-top: 10px;
   width: 280px;
