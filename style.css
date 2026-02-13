@@ -66,7 +66,7 @@ body.dark {
   --accent: #007acc;
   --accent-shadow: #015c99;
   --li-text: #66c2ff;
-  --card-bg: #333;
+  --card-bg: #2f2f2f;
 }
 
 /* =========================
@@ -155,7 +155,7 @@ input {
 }
 
 .btn:active {
-  top: 3px;
+  transform: translateY(2px);
 }
 
 .btn--type-first {
@@ -201,6 +201,7 @@ li {
 
   animation: 0.2s show ease;
   transition: var(--t-out);
+  background: linear-gradient(to bottom, #2f2f2f 0%, #2f2f2f 100%);
 }
 
 li:last-child {
@@ -337,7 +338,22 @@ li.remove {
   transition: transform 0.2s ease;
 }
 
+.settings__btn i {
+  width: 20px;
+  display: inline-flex;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.settings.open .settings__btn i {
+  transform: rotate(180deg);
+}
+
 .settings__panel {
+  position: absolute;
+  top: 54px;
+    right: 0;
+  margin-top: 0;
   margin-top: 10px;
   width: 280px;
   padding: 12px 20px;
@@ -347,14 +363,6 @@ li.remove {
   background: var(--settings-panel-bg);
 
   box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.7);
-}
-
-.settings__btn i {
-  transition: transform 0.2s ease;
-}
-
-.settings.open .settings__btn i {
-  transform: rotate(90deg) scale(1.05);
 }
 
 .settings__row {
@@ -386,7 +394,7 @@ li.remove {
 .backdrop {
   position: fixed;
   inset: 0;
-  z-index: 15; /* ниже панели (20), но выше todo */
+  z-index: 15;
   background: rgba(0, 0, 0, 0.55);
   opacity: 0;
   transition: opacity 0.2s ease;
