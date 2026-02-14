@@ -426,12 +426,12 @@ li.remove {
    Responsive
 ========================= */
 
-@media (max-width: 700px) {
+/* @media (max-width: 700px) {
   li.hide {
     opacity: 0;
     transform: translateX(50px) scale(0.95);
   }
-}
+} */
 
 @media (max-width: 360px) {
   .todo {
