@@ -24,8 +24,13 @@
   if (!input || !list || !clearChecksBtn || !form) return;
 
   /* =========================
-     Empty state
+     State
   ========================= */
+
+  let state = {
+    tasks: [],
+  };
+
   let emptyState = document.getElementById("emptyState");
   if (!emptyState) {
     emptyState = document.createElement("p");
@@ -36,7 +41,7 @@
   }
 
   const updateEmptyState = () =>
-    emptyState.classList.toggle("hidden", list.children.length > 0);
+    emptyState.classList.toggle("hidden", state.tasks.length > 0);
 
   /* =========================
      Utils
@@ -62,6 +67,11 @@
       return Date.now() + Math.random().toString(16).slice(2);
     }
   };
+
+  function isDuplicate(title) {
+    const normalized = normalizeText(title);
+    return state.tasks.some((t) => normalizeText(t.text) === normalized);
+  }
 
   /* =========================
      Preferences
@@ -120,31 +130,16 @@
   /* =========================
      Storage
   ========================= */
-  const saveToStorage = () => {
-    const items = [...list.children].map((li) => ({
-      id: li.dataset.id,
-      createdAt: Number(li.dataset.createdAt),
-      text: li.querySelector(".task-text")?.textContent || "",
-      done: li.classList.contains("done"),
-    }));
+  function saveToStorage() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.tasks));
+  }
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  };
-
-  const loadFromStorage = () => {
+  function loadFromStorage() {
     const saved = safeParse(localStorage.getItem(STORAGE_KEY));
-    if (!Array.isArray(saved)) return;
-
-    saved.forEach((item, i) => {
-      if (!item?.text) return;
-      addItem(item.text, item.done, {
-        id: item.id || cryptoId(),
-        createdAt: item.createdAt || Date.now() + i,
-      });
-    });
-
-    updateEmptyState();
-  };
+    if (Array.isArray(saved)) {
+      state.tasks = saved;
+    }
+  }
 
   /* =========================
    Settings UI
@@ -191,55 +186,46 @@
   /* =========================
      Sorting
   ========================= */
-  const compareItems = (a, b) => {
-    const aDone = a.classList.contains("done");
-    const bDone = b.classList.contains("done");
-    if (aDone !== bDone) return aDone ? 1 : -1;
+  function compareTasks(a, b) {
+    if (a.done !== b.done) return a.done ? 1 : -1;
 
     if (prefs.sort === "alpha") {
-      return normalizeText(
-        a.querySelector(".task-text").textContent,
-      ).localeCompare(normalizeText(b.querySelector(".task-text").textContent));
+      return normalizeText(a.text).localeCompare(normalizeText(b.text));
     }
 
-    return Number(a.dataset.createdAt) - Number(b.dataset.createdAt);
-  };
-
-  const insertSortedItem = (li) => {
-    const items = [...list.children];
-    for (const item of items) {
-      if (compareItems(li, item) < 0) {
-        list.insertBefore(li, item);
-        return;
-      }
-    }
-    list.append(li);
-  };
-
-  /* =========================
-     Animation toggle
-  ========================= */
-  const toggleDone = (li, checkbox) => {
-    li.classList.toggle("done", checkbox.checked);
-    li.classList.add("hide");
-
-    setTimeout(() => {
-      li.classList.remove("hide");
-      if (li.parentElement === list) list.removeChild(li);
-      insertSortedItem(li);
-      saveToStorage();
-      updateEmptyState();
-    }, 200);
-  };
+    return a.createdAt - b.createdAt;
+  }
 
   /* =========================
      Add item
   ========================= */
-  const addItem = (text, done = false, meta = {}) => {
+
+  function addTask(text) {
+    state.tasks.push({
+      id: cryptoId(),
+      text,
+      done: false,
+      createdAt: Date.now(),
+    });
+  }
+
+  function render() {
+    list.innerHTML = "";
+
+    const sorted = [...state.tasks].sort(compareTasks);
+
+    sorted.forEach((task) => {
+      const li = createTaskElement(task);
+      list.appendChild(li);
+    });
+
+    updateEmptyState();
+  }
+
+  function createTaskElement(task) {
     const li = document.createElement("li");
-    li.dataset.id = meta.id || cryptoId();
-    li.dataset.createdAt = meta.createdAt || Date.now();
-    li.classList.toggle("done", done);
+    li.dataset.id = task.id;
+    li.classList.toggle("done", task.done);
 
     const label = document.createElement("label");
     label.className = "custom-checkbox";
@@ -247,7 +233,7 @@
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "checkbox-input";
-    checkbox.checked = done;
+    checkbox.checked = task.done;
 
     const mark = document.createElement("span");
     mark.className = "checkbox-mark";
@@ -257,56 +243,135 @@
 
     const span = document.createElement("span");
     span.className = "task-text";
-    span.textContent = titleCaseFirst(text);
+    span.textContent = titleCaseFirst(task.text);
 
     const del = document.createElement("button");
     del.type = "button";
     del.className = "btn btn--remove";
     del.textContent = "❌";
 
+    /* =========================
+     TOGGLE LOGIC (единая)
+  ========================= */
+    function handleToggle() {
+      li.classList.add("hide");
+
+      setTimeout(() => {
+        toggleTask(task.id);
+
+        li.classList.toggle("done", checkbox.checked);
+
+        saveToStorage();
+
+        li.classList.remove("hide");
+
+        list.removeChild(li);
+
+        const sorted = [...state.tasks].sort(compareTasks);
+        const newIndex = sorted.findIndex((t) => t.id === task.id);
+
+        if (newIndex >= list.children.length) {
+          list.appendChild(li);
+        } else {
+          list.insertBefore(li, list.children[newIndex]);
+        }
+      }, 200);
+    }
+
+    /* =========================
+     Checkbox toggle
+  ========================= */
+    checkbox.addEventListener("change", handleToggle);
+
+    /* =========================
+     Click on row
+  ========================= */
     li.addEventListener("click", (e) => {
       if (e.target.closest("button")) return;
 
+      // переключаем чекбокс вручную
       checkbox.checked = !checkbox.checked;
-      toggleDone(li, checkbox);
+
+      handleToggle();
     });
 
-    del.addEventListener("click", () => {
+    /* =========================
+     Delete
+  ========================= */
+    del.addEventListener("click", (e) => {
+      e.stopPropagation();
+
       li.classList.add("remove");
+
       setTimeout(() => {
+        // 1️⃣ удаляем из state
+        state.tasks = state.tasks.filter((t) => t.id !== task.id);
+
+        // 2️⃣ удаляем только этот элемент из DOM
         li.remove();
+
+        // 3️⃣ сохраняем
         saveToStorage();
+
+        // 4️⃣ обновляем empty
         updateEmptyState();
       }, 200);
     });
 
     li.append(label, span, del);
-    insertSortedItem(li);
-    updateEmptyState();
-  };
+
+    return li;
+  }
+
+  function toggleTask(id) {
+    const task = state.tasks.find((t) => t.id === id);
+    if (!task) return;
+
+    task.done = !task.done;
+  }
 
   /* =========================
      Controls
   ========================= */
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
     const value = normalizeText(input.value);
     if (!value) return;
-    addItem(value);
+    if (isDuplicate(value)) return;
+
+    // 1️⃣ создаём задачу
+    const newTask = {
+      id: cryptoId(),
+      text: value,
+      done: false,
+      createdAt: Date.now(),
+    };
+
+    state.tasks.push(newTask);
     saveToStorage();
+
+    // 2️⃣ создаём DOM
+    const li = createTaskElement(newTask);
+
+    // 3️⃣ вычисляем позицию
+    const sorted = [...state.tasks].sort(compareTasks);
+    const newIndex = sorted.findIndex((t) => t.id === newTask.id);
+
+    if (newIndex >= list.children.length) {
+      list.appendChild(li);
+    } else {
+      list.insertBefore(li, list.children[newIndex]);
+    }
+
+    updateEmptyState();
     input.value = "";
   });
 
   clearChecksBtn.addEventListener("click", () => {
-    list.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
-      checkbox.checked = false;
-      const li = checkbox.closest("li");
-      if (li) li.classList.remove("done");
-    });
-
-    [...list.children].forEach((li) => insertSortedItem(li));
+    state.tasks.forEach((task) => (task.done = false));
     saveToStorage();
-    updateEmptyState();
+    render();
   });
 
   themeSelect?.addEventListener("change", () => {
@@ -319,13 +384,13 @@
   sortSelect?.addEventListener("change", () => {
     prefs.sort = sortSelect.value;
     writePrefs(prefs);
-    [...list.children].forEach((li) => insertSortedItem(li));
-    saveToStorage();
+    render();
     setPanelOpen(false);
   });
 
   window.addEventListener("DOMContentLoaded", () => {
     loadFromStorage();
+    render();
     applyTheme(prefs.theme);
     themeSelect && (themeSelect.value = prefs.theme);
     sortSelect && (sortSelect.value = prefs.sort);
