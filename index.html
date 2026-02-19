@@ -25,7 +25,7 @@
 
       <div
         id="settingsPanel"
-        class="settings__panel hidden"
+        class="settings__panel"
         role="dialog"
         aria-label="Настройки приложения"
       >
@@ -46,9 +46,20 @@
             <option value="alpha">По алфавиту</option>
           </select>
         </div>
+
+        <div class="settings__row">
+          <label for="fontSelect" class="settings__label">Размер шрифта</label>
+          <select id="fontSelect" class="settings__select">
+            <option value="10">10</option>
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="16">16</option>
+          </select>
+        </div>
       </div>
     </div>
     <div id="backdrop" class="backdrop hidden" aria-hidden="true"></div>
+
     <div class="todo">
       <form class="form">
         <button
@@ -71,7 +82,6 @@
           ➕
         </button>
       </form>
-
       <ul id="taskList" class="list" aria-label="Список задач"></ul>
       <p id="emptyState" class="empty-state hidden">
         Пока пусто... Добавь первую задачу ➕

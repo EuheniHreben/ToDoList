@@ -148,7 +148,7 @@
     if (!settingsBtn || !settingsPanel) return;
 
     settingsBtn.setAttribute("aria-expanded", String(isOpen));
-    settingsPanel.classList.toggle("hidden", !isOpen);
+    // settingsPanel.classList.toggle("hidden", !isOpen);
 
     const wrap = settingsBtn.closest(".settings");
     if (wrap) wrap.classList.toggle("open", isOpen);

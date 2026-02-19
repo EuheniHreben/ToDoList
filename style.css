@@ -78,8 +78,11 @@ body {
   padding: 20px 0;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  position: relative;
 
   font-family: var(--font);
 
@@ -313,10 +316,12 @@ li.remove {
    Settings (top-right)
 ========================= */
 .settings {
-  position: fixed;
-  top: 14px;
-  right: 14px;
+  position: relative;
+  margin-bottom: 20px;
   z-index: 20;
+  display: flex;
+  justify-content: center;
+  width: min(100%, var(--container-max));
 }
 
 .settings__btn {
@@ -351,18 +356,39 @@ li.remove {
 
 .settings__panel {
   position: absolute;
-  top: 54px;
-  right: 0;
-  margin-top: 0;
   margin-top: 10px;
-  width: 380px;
   padding: 12px 20px;
+
+  top: 54px;
+  left: 50%;
+
+  width: 90%;
+  max-width: calc(var(--container-max) - 40px);
 
   border-radius: 12px;
   border: 2px solid color-mix(in srgb, var(--accent) 80%, transparent);
   background: var(--settings-panel-bg);
 
   box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.7);
+
+  opacity: 0;
+  transform: translateX(-50%) scale(0.8);
+  pointer-events: none;
+  transform-origin: top center;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.settings:not(.open) .settings__panel {
+  visibility: hidden;
+}
+
+.settings.open .settings__panel {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .settings__row {
