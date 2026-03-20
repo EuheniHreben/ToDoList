@@ -98,6 +98,9 @@ body {
    Todo Card
 ========================= */
 .todo {
+  display: flex;
+  flex-direction: column;
+
   width: min(90%, var(--container-max));
   min-height: 160px;
   padding: 20px;
@@ -149,6 +152,7 @@ input {
 
   background-color: var(--accent);
   color: var(--btn-text);
+  font-weight: bold;
 
   white-space: nowrap;
   position: relative;

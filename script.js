@@ -4,8 +4,8 @@
   /* =========================
      Keys
   ========================= */
-  const STORAGE_KEY = "myList";
-  const PREFS_KEY = "todoPrefs";
+  // const STORAGE_KEY = "myList";
+  // const PREFS_KEY = "todoPrefs";
 
   /* =========================
      Elements
@@ -26,12 +26,13 @@
   /* =========================
      State
   ========================= */
-
   let state = {
-    tasks: [],
+    lists: [],
+    activeListId: null,
   };
 
   let emptyState = document.getElementById("emptyState");
+
   if (!emptyState) {
     emptyState = document.createElement("p");
     emptyState.id = "emptyState";
@@ -46,53 +47,53 @@
   /* =========================
      Utils
   ========================= */
-  const normalizeText = (s) =>
-    String(s).trim().replace(/\s+/g, " ").toLowerCase();
+  // const normalizeText = (s) =>
+  //   String(s).trim().replace(/\s+/g, " ").toLowerCase();
 
-  const titleCaseFirst = (s) =>
-    s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+  // const titleCaseFirst = (s) =>
+  //   s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
-  const safeParse = (json) => {
-    try {
-      return JSON.parse(json);
-    } catch {
-      return null;
-    }
-  };
+  // const safeParse = (json) => {
+  //   try {
+  //     return JSON.parse(json);
+  //   } catch {
+  //     return null;
+  //   }
+  // };
 
-  const cryptoId = () => {
-    try {
-      return crypto.randomUUID();
-    } catch {
-      return Date.now() + Math.random().toString(16).slice(2);
-    }
-  };
+  // const cryptoId = () => {
+  //   try {
+  //     return crypto.randomUUID();
+  //   } catch {
+  //     return Date.now() + Math.random().toString(16).slice(2);
+  //   }
+  // };
 
-  function isDuplicate(title) {
-    const normalized = normalizeText(title);
-    return state.tasks.some((t) => normalizeText(t.text) === normalized);
-  }
+  // function isDuplicate(title) {
+  //   const normalized = normalizeText(title);
+  //   return state.tasks.some((t) => normalizeText(t.text) === normalized);
+  // }
 
   /* =========================
      Preferences
   ========================= */
-  const readPrefs = () => {
-    const raw = safeParse(localStorage.getItem(PREFS_KEY)) || {};
-    return {
-      theme: ["light", "dark", "system", "time"].includes(raw.theme)
-        ? raw.theme
-        : "time",
-      sort: raw.sort === "alpha" ? "alpha" : "added",
-    };
-  };
+  // const readPrefs = () => {
+  //   const raw = safeParse(localStorage.getItem(PREFS_KEY)) || {};
+  //   return {
+  //     theme: ["light", "dark", "system", "time"].includes(raw.theme)
+  //       ? raw.theme
+  //       : "time",
+  //     sort: raw.sort === "alpha" ? "alpha" : "added",
+  //   };
+  // };
 
-  const writePrefs = (next) => {
-    try {
-      localStorage.setItem(PREFS_KEY, JSON.stringify(next));
-    } catch {}
-  };
+  // const writePrefs = (next) => {
+  //   try {
+  //     localStorage.setItem(PREFS_KEY, JSON.stringify(next));
+  //   } catch {}
+  // };
 
-  let prefs = readPrefs();
+  // let prefs = readPrefs();
 
   /* =========================
      Theme logic
@@ -130,16 +131,16 @@
   /* =========================
      Storage
   ========================= */
-  function saveToStorage() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.tasks));
-  }
+  // function saveToStorage() {
+  //   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.tasks));
+  // }
 
-  function loadFromStorage() {
-    const saved = safeParse(localStorage.getItem(STORAGE_KEY));
-    if (Array.isArray(saved)) {
-      state.tasks = saved;
-    }
-  }
+  // function loadFromStorage() {
+  //   const saved = safeParse(localStorage.getItem(STORAGE_KEY));
+  //   if (Array.isArray(saved)) {
+  //     state.tasks = saved;
+  //   }
+  // }
 
   /* =========================
    Settings UI
@@ -186,28 +187,56 @@
   /* =========================
      Sorting
   ========================= */
-  function compareTasks(a, b) {
-    if (a.done !== b.done) return a.done ? 1 : -1;
+  // function compareTasks(a, b) {
+  //   if (a.done !== b.done) return a.done ? 1 : -1;
 
-    if (prefs.sort === "alpha") {
-      return normalizeText(a.text).localeCompare(normalizeText(b.text));
-    }
+  //   if (prefs.sort === "alpha") {
+  //     return normalizeText(a.text).localeCompare(normalizeText(b.text));
+  //   }
 
-    return a.createdAt - b.createdAt;
-  }
+  //   return a.createdAt - b.createdAt;
+  // }
 
   /* =========================
      Add item
   ========================= */
+  // function addList(title) {
+  //   const newList = {
+  //     id: Date.now(),
+  //     title,
+  //     tasks: [],
+  //   };
 
-  function addTask(text) {
-    state.tasks.push({
-      id: cryptoId(),
-      text,
-      done: false,
-      createdAt: Date.now(),
-    });
-  }
+  //   state.lists.push(newList);
+  //   render();
+  // }
+
+  // function addTask(text) {
+  //   state.tasks.push({
+  //     id: cryptoId(),
+  //     text,
+  //     done: false,
+  //     createdAt: Date.now(),
+  //   });
+  // }
+
+  // function renderLists() {
+  //   const listsView = document.getElementById("listsView");
+  //   listsView.innerHTML = "";
+
+  //   state.lists.forEach((list) => {
+  //     const li = document.createElement("div");
+  //     li.textContent = list.title;
+  //     li.className = "list-item";
+
+  //     li.addEventListener("click", () => {
+  //       state.activeListId = list.id;
+  //       render();
+  //     });
+
+  //     listsView.appendChild(li);
+  //   });
+  // }
 
   function render() {
     list.innerHTML = "";
@@ -221,6 +250,32 @@
 
     updateEmptyState();
   }
+
+  // function render() {
+  //   if (state.activeListId === null) {
+  //     renderLists();
+  //     document.getElementById("listsView").classList.remove("hidden");
+  //     document.getElementById("tasksView").classList.add("hidden");
+  //   } else {
+  //     renderTasks();
+  //     document.getElementById("listsView").classList.add("hidden");
+  //     document.getElementById("tasksView").classList.remove("hidden");
+  //   }
+  // }
+
+  // function renderTasks() {
+  //   const list = state.lists.find((l) => l.id === state.activeListId);
+  //   if (!list) return;
+
+  //   const tasksView = document.getElementById("tasksView");
+  //   tasksView.innerHTML = "";
+
+  //   list.tasks.forEach((task) => {
+  //     const li = document.createElement("li");
+  //     li.textContent = task.text;
+  //     tasksView.appendChild(li);
+  //   });
+  // }
 
   function createTaskElement(task) {
     const li = document.createElement("li");

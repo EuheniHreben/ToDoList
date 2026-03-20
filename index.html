@@ -83,11 +83,22 @@
         </button>
       </form>
       <ul id="taskList" class="list" aria-label="Список задач"></ul>
+      <div id="listsView" class="list"></div>
+      <ul id="tasksView" class="list hidden"></ul>
       <p id="emptyState" class="empty-state hidden">
         Пока пусто... Добавь первую задачу ➕
       </p>
+      <button
+        id="newListBtn"
+        class="btn btn--type-first"
+        type="button"
+        aria-label="Создать новый список"
+      >
+        НОВЫЙ СПИСОК
+      </button>
+      <div class="btn-center"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>
