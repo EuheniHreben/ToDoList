@@ -20,6 +20,7 @@
   const themeSelect = document.getElementById("themeSelect");
   const sortSelect = document.getElementById("sortSelect");
   const backdrop = document.getElementById("backdrop");
+  const fontSelect = document.getElementById("fontSelect");
 
   if (!input || !list || !clearChecksBtn || !form) return;
 
@@ -83,6 +84,9 @@
         ? raw.theme
         : "time",
       sort: raw.sort === "alpha" ? "alpha" : "added",
+      fontSize: ["18", "22", "26"].includes(String(raw.fontSize))
+        ? String(raw.fontSize)
+        : "22",
     };
   };
 
@@ -91,6 +95,10 @@
       localStorage.setItem(PREFS_KEY, JSON.stringify(next));
     } catch {}
   };
+
+  function applyFontSize(size) {
+    document.documentElement.style.setProperty("--font-size", size + "px");
+  }
 
   let prefs = readPrefs();
 
@@ -259,7 +267,10 @@
       setTimeout(() => {
         toggleTask(task.id);
 
-        li.classList.toggle("done", checkbox.checked);
+        const updatedTask = state.tasks.find((t) => t.id === task.id);
+
+        li.classList.toggle("done", updatedTask.done);
+        checkbox.checked = updatedTask.done;
 
         saveToStorage();
 
@@ -289,10 +300,7 @@
     li.addEventListener("click", (e) => {
       if (e.target.closest("button")) return;
 
-      // переключаем чекбокс вручную
-      checkbox.checked = !checkbox.checked;
-
-      handleToggle();
+      checkbox.click();
     });
 
     /* =========================
@@ -388,12 +396,21 @@
     setPanelOpen(false);
   });
 
+  fontSelect?.addEventListener("change", () => {
+    prefs.fontSize = fontSelect.value;
+    writePrefs(prefs);
+    applyFontSize(prefs.fontSize);
+    setPanelOpen(false);
+  });
+
   window.addEventListener("DOMContentLoaded", () => {
     loadFromStorage();
     render();
     applyTheme(prefs.theme);
     themeSelect && (themeSelect.value = prefs.theme);
     sortSelect && (sortSelect.value = prefs.sort);
+    applyFontSize(prefs.fontSize);
+    fontSelect && (fontSelect.value = prefs.fontSize);
     updateEmptyState();
   });
 })();
