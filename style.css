@@ -188,6 +188,7 @@ ul {
 }
 
 li {
+  position: relative;
   list-style: none;
   width: 100%;
   display: flex;
@@ -261,7 +262,7 @@ li.remove {
   pointer-events: none;
 }
 
-.custom-checkbox {
+/* .custom-checkbox {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -274,9 +275,9 @@ li.remove {
 
   cursor: pointer;
   position: relative;
-}
+} */
 
-.checkbox-mark {
+/* .checkbox-mark {
   font-size: 16px;
   line-height: 1;
 
@@ -291,6 +292,28 @@ li.remove {
 .checkbox-input:checked + .checkbox-mark {
   opacity: 1;
   transform: scale(1.2);
+} */
+
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.checkbox-mark {
+  font-size: 18px;
+  color: var(--accent);
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.checkbox-input:checked + .checkbox-mark {
+  opacity: 1;
 }
 
 /* =========================
@@ -471,9 +494,5 @@ li.remove {
   .btn--type-first {
     padding: 8px 16px;
     font-size: 14px;
-  }
-
-  .task-text {
-    font-size: 18px;
   }
 }
