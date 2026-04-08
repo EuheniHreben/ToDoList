@@ -245,7 +245,8 @@
 
     const mark = document.createElement("span");
     mark.className = "checkbox-mark";
-    mark.textContent = "✅";
+    // mark.textContent = "✅";
+    mark.textContent = "✔";
 
     label.append(checkbox, mark);
 
@@ -298,7 +299,11 @@
      Click on row
   ========================= */
     li.addEventListener("click", (e) => {
-      if (e.target.closest("button")) return;
+      if (
+        e.target.closest("button") ||
+        e.target.closest(".custom-checkbox") // 👈 ключевой фикс
+      )
+        return;
 
       checkbox.click();
     });
