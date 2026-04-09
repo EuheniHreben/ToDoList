@@ -47,7 +47,6 @@
   --settings-btn-bg: rgba(0, 0, 0, 1);
 }
 
-/* LIGHT theme (if you need it later) */
 body.light {
   --bg: #222222;
   --card-bg: #2f2f2f;
@@ -63,7 +62,6 @@ body.light {
   --settings-panel-bg: rgba(35, 35, 35, 0.98);
 }
 
-/* DARK theme override (blue accent) */
 body.dark {
   --accent: #007acc;
   --accent-shadow: #015c99;
@@ -191,6 +189,7 @@ li {
   position: relative;
   list-style: none;
   width: 100%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -215,7 +214,6 @@ li:last-child {
   box-shadow: none;
 }
 
-/* Hover only for mouse devices */
 @media (hover: hover) and (pointer: fine) {
   li:hover {
     border-radius: 10px;
@@ -225,7 +223,6 @@ li:last-child {
   }
 }
 
-/* Animated states */
 li.hide {
   opacity: 0;
   transform: translateX(100%) scale(0.95);
@@ -243,7 +240,6 @@ li.remove {
   from {
     opacity: 0;
     transform: translateX(140px);
-    /* transform: translateY(20px); */
   }
   to {
     opacity: 1;
@@ -262,38 +258,6 @@ li.remove {
   pointer-events: none;
 }
 
-/* .custom-checkbox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 20px;
-  height: 20px;
-
-  border: 2px solid var(--accent);
-  border-radius: 2px;
-
-  cursor: pointer;
-  position: relative;
-} */
-
-/* .checkbox-mark {
-  font-size: 16px;
-  line-height: 1;
-
-  opacity: 0;
-  transform: scale(1);
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-  pointer-events: none;
-}
-
-.checkbox-input:checked + .checkbox-mark {
-  opacity: 1;
-  transform: scale(1.2);
-} */
-
 .custom-checkbox {
   width: 22px;
   height: 22px;
@@ -303,16 +267,21 @@ li.remove {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-}
-
-.checkbox-mark {
-  font-size: 18px;
-  color: var(--accent);
-  opacity: 0;
   transition: 0.2s;
 }
 
-.checkbox-input:checked + .checkbox-mark {
+.checkbox-mark {
+  font-size: 22px;
+  opacity: 0;
+  color: var(--bg); 
+  transition: 0.2s;
+}
+
+.custom-checkbox:has(.checkbox-input:checked) {
+  background: var(--accent);
+}
+
+.custom-checkbox:has(.checkbox-input:checked) .checkbox-mark {
   opacity: 1;
 }
 
