@@ -243,10 +243,13 @@
     checkbox.className = "checkbox-input";
     checkbox.checked = task.done;
 
-    const mark = document.createElement("span");
-    mark.className = "checkbox-mark";
+    // const mark = document.createElement("span");
+    // mark.className = "checkbox-mark";
     // mark.textContent = "✅";
-    mark.textContent = "✔";
+    // mark.textContent = "✔";
+
+    const mark = document.createElement("i");
+    mark.className = "fa-solid fa-check checkbox-mark";
 
     label.append(checkbox, mark);
 
