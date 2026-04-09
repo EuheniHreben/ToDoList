@@ -280,12 +280,13 @@
      TOGGLE LOGIC (единая)
   ========================= */
     function handleToggle() {
+      playCheckSound();
+      
       li.classList.add("hide");
 
       setTimeout(() => {
         toggleTask(task.id);
 
-        playCheckSound();
 
         const updatedTask = state.tasks.find((t) => t.id === task.id);
 
