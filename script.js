@@ -21,6 +21,7 @@
   const sortSelect = document.getElementById("sortSelect");
   const backdrop = document.getElementById("backdrop");
   const fontSelect = document.getElementById("fontSelect");
+  const soundToggle = document.getElementById("soundToggle");
 
   if (!input || !list || !clearChecksBtn || !form) return;
 
@@ -75,6 +76,19 @@
   }
 
   /* =========================
+       Sound
+  ========================= */
+  const sound = new Audio("./sounds/check.wav");
+  sound.volume = 0.25;
+
+  function playCheckSound() {
+    if (prefs.sound === "off") return;
+
+    sound.currentTime = 0;
+    sound.play();
+  }
+
+  /* =========================
      Preferences
   ========================= */
   const readPrefs = () => {
@@ -87,6 +101,7 @@
       fontSize: ["18", "22", "26"].includes(String(raw.fontSize))
         ? String(raw.fontSize)
         : "22",
+      sound: raw.sound === "off" ? "off" : "on",
     };
   };
 
@@ -156,7 +171,6 @@
     if (!settingsBtn || !settingsPanel) return;
 
     settingsBtn.setAttribute("aria-expanded", String(isOpen));
-    // settingsPanel.classList.toggle("hidden", !isOpen);
 
     const wrap = settingsBtn.closest(".settings");
     if (wrap) wrap.classList.toggle("open", isOpen);
@@ -270,6 +284,8 @@
 
       setTimeout(() => {
         toggleTask(task.id);
+
+        playCheckSound();
 
         const updatedTask = state.tasks.find((t) => t.id === task.id);
 
@@ -411,6 +427,11 @@
     setPanelOpen(false);
   });
 
+  soundToggle?.addEventListener("change", () => {
+    prefs.sound = soundToggle.value;
+    writePrefs(prefs);
+  });
+
   window.addEventListener("DOMContentLoaded", () => {
     loadFromStorage();
     render();
@@ -419,6 +440,7 @@
     sortSelect && (sortSelect.value = prefs.sort);
     applyFontSize(prefs.fontSize);
     fontSelect && (fontSelect.value = prefs.fontSize);
+    soundToggle && (soundToggle.value = prefs.sound);
     updateEmptyState();
   });
 })();
