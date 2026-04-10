@@ -11,19 +11,23 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* =========================
+   Variables
+========================= */
 :root {
-  /* Fonts */
   --font: Arial, Helvetica, sans-serif;
 
-  /* Layout */
   --container-max: 400px;
   --radius: 12px;
 
-  /* Animation */
   --t-fast: 0.2s ease-in;
   --t-out: 0.2s ease-out;
 
-  /* Theme (default: DARK) */
   --bg: #222;
   --text: #fff;
 
@@ -42,18 +46,19 @@
 
   --font-size: 22px;
 
-  /* Settings */
   --settings-panel-bg: rgba(40, 40, 40, 0.96);
   --settings-btn-bg: rgba(0, 0, 0, 1);
 }
 
+/* =========================
+   Themes
+========================= */
 body.light {
-  --bg: #222222;
+  --bg: #222;
   --card-bg: #2f2f2f;
   --input-bg: #2a2a2a;
 
   --text: #fff;
-
   --li-text: #ffcc00;
 
   --btn-text: #222;
@@ -79,13 +84,10 @@ body {
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
-  position: relative;
+  justify-content: center;
 
   font-family: var(--font);
-
   background: var(--bg);
   color: var(--text);
 
@@ -114,7 +116,6 @@ body {
 .form {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -189,7 +190,7 @@ li {
   position: relative;
   list-style: none;
   width: 100%;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -273,7 +274,7 @@ li.remove {
 .checkbox-mark {
   font-size: 22px;
   opacity: 0;
-  color: var(--bg); 
+  color: var(--bg);
   transition: 0.2s;
 }
 

@@ -242,6 +242,7 @@
     });
 
     updateEmptyState();
+    console.log(state.tasks)
   }
 
   function createTaskElement(task) {
@@ -402,6 +403,8 @@
   });
 
   clearChecksBtn.addEventListener("click", () => {
+    const hasCompleted = state.tasks.some((a) => a.done);
+    if (!hasCompleted) return
     state.tasks.forEach((task) => (task.done = false));
     saveToStorage();
     render();
