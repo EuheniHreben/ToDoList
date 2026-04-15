@@ -11,11 +11,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body {
-  overflow-x: hidden;
-}
-
 /* =========================
    Variables
 ========================= */
@@ -77,10 +72,14 @@ body.dark {
 /* =========================
    Page
 ========================= */
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   min-height: 100vh;
   margin: 0;
-  padding: 20px 0;
 
   display: flex;
   flex-direction: column;
@@ -100,9 +99,10 @@ body {
    Todo Card
 ========================= */
 .todo {
-  width: min(90%, var(--container-max));
+  width: 90%;
+  max-width: var(--container-max);
   min-height: 160px;
-  padding: 20px;
+  padding: 16px;
 
   background-color: var(--card-bg);
   border-radius: var(--radius);
@@ -135,7 +135,12 @@ input {
   color: var(--text);
 
   transition: var(--t-fast);
+  outline: none;
 }
+
+input:focus {
+  box-shadow: 1px 1px 8px var(--accent);
+  }
 
 /* =========================
    Buttons
@@ -361,7 +366,7 @@ li.remove {
 }
 
 .settings.open .settings__btn i {
-  transform: rotate(90deg) scale(1.6);
+  transform: rotate(180deg) scale(1.6);
 }
 
 .settings__panel {
@@ -451,10 +456,6 @@ li.remove {
 @media (max-width: 360px) {
   .todo {
     padding: 10px;
-  }
-
-  .todo h1 {
-    font-size: 20px;
   }
 
   li {
