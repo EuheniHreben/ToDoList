@@ -330,13 +330,22 @@ li.remove {
 /* =========================
    Settings (top-right)
 ========================= */
+.tools {
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.title {
+  margin: 0;
+  white-space: nowrap;
+  margin-right: auto;
+}
 .settings {
   position: relative;
-  margin-bottom: 20px;
   z-index: 20;
   display: flex;
-  justify-content: center;
-  width: min(100%, var(--container-max));
+  justify-content: flex-end;
 }
 
 .settings__btn {
@@ -377,8 +386,8 @@ li.remove {
   top: 54px;
   left: 50%;
 
-  width: 90%;
-  max-width: calc(var(--container-max) - 40px);
+  /* max-width: calc(var(--container-max) - 40px); */
+  width: 340px;
 
   border-radius: 12px;
   border: 2px solid color-mix(in srgb, var(--accent) 80%, transparent);
@@ -401,7 +410,7 @@ li.remove {
 
 .settings.open .settings__panel {
   opacity: 1;
-  transform: translateX(-50%) scale(1);
+  transform: translateX(-98%) scale(1);
   pointer-events: auto;
   visibility: visible;
 }
@@ -421,7 +430,7 @@ li.remove {
 }
 
 .settings__select {
-  width: 160px;
+  width: 180px;
   padding: 8px;
   cursor: pointer;
 
