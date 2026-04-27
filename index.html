@@ -15,31 +15,22 @@
 
     <div class="todo">
       <div class="tools">
-        <h1 class="title">My Tasks</h1>
-        <!-- <div class="share">
-          <button
-            id="shareBtn"
-            class="settings__btn"
-            type="button"
-            aria-label="Открыть настройки"
-            aria-haspopup="dialog"
-            aria-expanded="false"
-          >
-          <i class="fa-regular fa-circle-user"></i>
-          </button>
-        </div>
         <div class="share">
           <button
             id="shareBtn"
             class="settings__btn"
             type="button"
-            aria-label="Открыть настройки"
+            aria-label="Скопировать в буфер"
             aria-haspopup="dialog"
             aria-expanded="false"
           >
-            <i class="fa-solid fa-share-nodes"></i>
+            <span class="icon-wrap">
+              <i class="fa-solid fa-copy icon icon--share"></i>
+              <i class="fa-solid fa-check icon icon--check"></i>  
+            </span>
           </button>
-        </div> -->
+        </div>
+        <h1 class="title">My Tasks</h1>
         <div class="settings" aria-label="Настройки">
           <button
             id="settingsBtn"
@@ -119,6 +110,8 @@
         Список пуст... Добавь первую задачу ➕
       </p>
     </div>
+
+    <div id="toast" class="toast hidden"></div>
 
     <script src="script.js"></script>
   </body>
