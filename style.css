@@ -37,12 +37,12 @@
 
   --btn-text: #333;
 
-  --shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+  --shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
 
   --font-size: 22px;
 
   --settings-panel-bg: rgba(40, 40, 40, 0.96);
-  --settings-btn-bg: rgba(0, 0, 0, 1);
+  --settings-btn-bg: rgba(0, 0, 0, 0.5);
 }
 
 /* =========================
@@ -140,7 +140,7 @@ input {
 
 input:focus {
   box-shadow: 1px 1px 8px var(--accent);
-  }
+}
 
 /* =========================
    Buttons
@@ -265,8 +265,8 @@ li.remove {
 }
 
 .custom-checkbox {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   border: 2px solid var(--accent);
   border-radius: 4px;
   display: flex;
@@ -309,6 +309,7 @@ li.remove {
 .done .task-text {
   text-decoration: line-through;
   opacity: 0.6;
+  transform: scale(0.8);
   color: gray;
 }
 
@@ -333,13 +334,15 @@ li.remove {
 .tools {
   padding: 16px 0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 16px;
 }
 .title {
   margin: 0;
   white-space: nowrap;
-  margin-right: auto;
+  font-weight: 600;
+  opacity: 0.9;
 }
 .settings {
   position: relative;
@@ -371,7 +374,9 @@ li.remove {
   width: 20px;
   display: inline-flex;
   justify-content: center;
-  transition: transform 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    color 0.2s ease;
 }
 
 .settings.open .settings__btn i {
@@ -386,7 +391,6 @@ li.remove {
   top: 54px;
   left: 50%;
 
-  /* max-width: calc(var(--container-max) - 40px); */
   width: 340px;
 
   border-radius: 12px;
@@ -410,7 +414,7 @@ li.remove {
 
 .settings.open .settings__panel {
   opacity: 1;
-  transform: translateX(-98%) scale(1);
+  transform: translateX(-95%) scale(1);
   pointer-events: auto;
   visibility: visible;
 }
@@ -458,6 +462,43 @@ li.remove {
   color: #ff3b30;
 }
 
+.icon-wrap {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.icon {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* стартовое состояние */
+.icon--check {
+  opacity: 0;
+  transform: scale(1.5) rotate(-270deg);
+}
+
+/* активное состояние */
+.share-success .icon--share {
+  opacity: 0;
+  transform: scale(1.5) rotate(270deg);
+}
+
+.share-success .icon--check {
+  opacity: 1;
+  transform: scale(1.5) rotate(0);
+  color: #4caf50;
+}
+
 /* =========================
    Responsive
 ========================= */
@@ -475,4 +516,36 @@ li.remove {
     padding: 8px 16px;
     font-size: 14px;
   }
+}
+
+/* =========================
+   Toast
+========================= */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+
+  padding: 12px 20px;
+  border-radius: 10px;
+
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+
+  font-size: 14px;
+  pointer-events: none;
+
+  opacity: 0;
+  transition: all 0.25s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.hidden {
+  display: none;
 }

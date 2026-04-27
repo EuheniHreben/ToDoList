@@ -14,8 +14,11 @@
   const list = document.getElementById("taskList");
   const clearChecksBtn = document.getElementById("clearChecksBtn");
   const form = document.querySelector(".form");
+  const toast = document.getElementById("toast");
+  let toastTimeout;
 
   const settingsBtn = document.getElementById("settingsBtn");
+  const shareBtn = document.getElementById("shareBtn");
   const settingsPanel = document.getElementById("settingsPanel");
   const themeSelect = document.getElementById("themeSelect");
   const sortSelect = document.getElementById("sortSelect");
@@ -242,7 +245,7 @@
     });
 
     updateEmptyState();
-    console.log(state.tasks)
+    console.log(state.tasks);
   }
 
   function createTaskElement(task) {
@@ -282,12 +285,11 @@
   ========================= */
     function handleToggle() {
       playCheckSound();
-      
+
       li.classList.add("hide");
 
       setTimeout(() => {
         toggleTask(task.id);
-
 
         const updatedTask = state.tasks.find((t) => t.id === task.id);
 
@@ -365,14 +367,81 @@
   }
 
   /* =========================
+     Sharing
+  ========================= */
+  function formatTasksForShare(tasks) {
+    if (!tasks.length) return "Список пуст";
+
+    const lines = tasks.map((task) => {
+      const mark = task.done ? "☑" : "☐";
+      return `${mark} ${task.text}`;
+    });
+
+    return `📝 Список задач:\n\n${lines.join("\n")}`;
+  }
+
+  async function copyTasks() {
+    const sorted = [...state.tasks].sort(compareTasks);
+    const text = formatTasksForShare(sorted);
+
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast("✔ Скопировано в буфер");
+      animateShareButton();
+    } catch {
+      prompt("Скопируй список:", text);
+    }
+  }
+
+  function showToast(message) {
+    if (!toast) return;
+
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+
+    // force reflow, чтобы анимация сработала
+    void toast.offsetWidth;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimeout);
+
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove("show");
+
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 250);
+    }, 2000);
+  }
+
+  let shareBtnTimeout;
+
+  function animateShareButton() {
+    if (!shareBtn) return;
+
+    shareBtn.classList.add("share-success");
+
+    clearTimeout(shareBtnTimeout);
+
+    shareBtnTimeout = setTimeout(() => {
+      shareBtn.classList.remove("share-success");
+    }, 2000);
+  }
+
+  /* =========================
      Controls
   ========================= */
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const value = normalizeText(input.value);
+    // const value = normalizeText(input.value);
+
+    const value = input.value.trim();
+    const normalized = normalizeText(value);
+
     if (!value) return;
-    if (isDuplicate(value)) return;
+    if (isDuplicate(normalized)) return;
 
     // 1️⃣ создаём задачу
     const newTask = {
@@ -404,7 +473,7 @@
 
   clearChecksBtn.addEventListener("click", () => {
     const hasCompleted = state.tasks.some((a) => a.done);
-    if (!hasCompleted) return
+    if (!hasCompleted) return;
     state.tasks.forEach((task) => (task.done = false));
     saveToStorage();
     render();
@@ -436,15 +505,19 @@
     writePrefs(prefs);
   });
 
+  shareBtn?.addEventListener("click", copyTasks);
+
   window.addEventListener("DOMContentLoaded", () => {
     loadFromStorage();
+
     render();
+
     applyTheme(prefs.theme);
-    themeSelect && (themeSelect.value = prefs.theme);
-    sortSelect && (sortSelect.value = prefs.sort);
     applyFontSize(prefs.fontSize);
-    fontSelect && (fontSelect.value = prefs.fontSize);
-    soundToggle && (soundToggle.value = prefs.sound);
-    updateEmptyState();
+
+    if (themeSelect) themeSelect.value = prefs.theme;
+    if (sortSelect) sortSelect.value = prefs.sort;
+    if (fontSelect) fontSelect.value = prefs.fontSize;
+    if (soundToggle) soundToggle.value = prefs.sound;
   });
 })();
