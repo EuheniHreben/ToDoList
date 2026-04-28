@@ -386,10 +386,18 @@
 
     try {
       await navigator.clipboard.writeText(text);
-      showToast("✔ Скопировано в буфер");
+      if (!isMobile()) {
+        showToast("✔ Скопировано в буфер");
+      }
       animateShareButton();
-    } catch {
-      prompt("Скопируй список:", text);
+    } catch (err) {
+      console.error(err);
+
+      if (!isMobile()) {
+        prompt("Скопируй список:", text);
+      } else {
+        showToast("❌ Не удалось скопировать");
+      }
     }
   }
 
@@ -399,7 +407,6 @@
     toast.textContent = message;
     toast.classList.remove("hidden");
 
-    // force reflow, чтобы анимация сработала
     void toast.offsetWidth;
 
     toast.classList.add("show");
@@ -427,6 +434,10 @@
     shareBtnTimeout = setTimeout(() => {
       shareBtn.classList.remove("share-success");
     }, 2000);
+  }
+
+  function isMobile() {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   }
 
   /* =========================
