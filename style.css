@@ -277,7 +277,7 @@ li.remove {
 }
 
 .checkbox-mark {
-  font-size: 22px;
+  font-size: 26px;
   opacity: 0;
   color: var(--bg);
   transition: 0.2s;
@@ -338,12 +338,14 @@ li.remove {
   align-items: center;
   gap: 16px;
 }
+
 .title {
   margin: 0;
   white-space: nowrap;
   font-weight: 600;
   opacity: 0.9;
 }
+
 .settings {
   position: relative;
   z-index: 20;
@@ -484,7 +486,7 @@ li.remove {
 /* стартовое состояние */
 .icon--check {
   opacity: 0;
-  transform: scale(1.5) rotate(-270deg);
+  transform: scale(1.5) rotate(360deg);
 }
 
 /* активное состояние */
@@ -495,7 +497,7 @@ li.remove {
 
 .share-success .icon--check {
   opacity: 1;
-  transform: scale(1.5) rotate(0);
+  transform: scale(1.8) rotate(0);
   color: #4caf50;
 }
 
